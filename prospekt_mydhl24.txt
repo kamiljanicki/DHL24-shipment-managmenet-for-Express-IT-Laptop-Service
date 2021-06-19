@@ -1,0 +1,73 @@
+######POMYSLY:
+
+##PRZEZNACZENIE: ##
+Panel ma nas odciążyć od ręcznego zamawiania przesyłek i zautomatyzować ten proces na tyle, aby ograniczało się to do dwóch kliknięć.
+
+##IDEA: ##
+Panel ma być na tyle użyteczny aby zrezygnować całkowicie z konieczności wchodzenia na stronę DHL gdy: klient zapyta o status,
+gdy będziemy chieli nadać przesyłkę, gdy będziemy chcieli odesłać przesyłkę.
+
+
+##PROPOZYCJE FUNKCJONALNOŚCI: ##
+
+# Wyświetlać na głównej stronie domyślnie zlecenie z datą odbioru, ale umożliwić też wyświetlenie zleceń z samodzielną wysyłką gdyby klient zmienił zdanie.
+# Stworzyć wyszukiwarkę zleceń aby łatwiej było sprawdzić jaki jest status przesyłki itp.
+# Umożliwić ponowna wysyłkę listu do klienta gdyby zadzwonił, że list nie dotarł
+# Wyświetlać ID zlecenia aby nie pomylić się przy ich odczytywaniu
+# Po dotarciu paczki do serwisu, wysłać klientowi maila oraz z smsa informacją o tym, że paczka dotarła oraz żeby czekał na diagnozę.
+
+
+##PROPOZYCJE FUNKCJONALNOŚCI: ##
+
+# PO ZAKOŃCZENIU NAPRAWY ZROBIĆ KONTROLKĘ KTÓRA OKREŚLA CZY KLIENT MA POWÓD BYĆ ZADOWLONY, JEŚLI TAK TO PO TYGODNIU OD OTRZYMANIA SPRZĘTU AUTOMATYCZNIE
+    OTRZYTMUJE MAILA I SMS Z PROŚBĄ O WYSTAWIENIE POZYTYWNEJ OPINII.
+# Na wypadek podania ZLEGO MAILA przez klienta zrobić pobranie zwrotki ze skrzynki ta aby w jakiś sposób wyświetliło się to w panelu
+# Jeśli w jednej paczce klient wyśle kilka laptopów a my będziemy je odsyłać osobno, to umożliwić ponowną wysyłkę z tego samego zlecenia, ak aby za każdą nową wysyłką
+  dopinał się do niej nowy tracking z adnotacją co zostało odesłane w danej paczce. Niesie to za sobą taki problem, że jeśli odesłana paczka nie zdąży wrócić do archiwum
+  a my będziemy chcieli wysłać kolejną, to nie ma jak. Trzeba zatem umożliwić w drodze wyjątku ręczne przeniesienie odesłanej paczki do archiwum, zanim zmieni ona status
+  na odebrany.
+# Dla klientów, którzy nie zgłaszają zleceń przez stronę, stworzyć funkcjonalność ręcznego dodawania zlecenia z poziomu panelu również z adnotacją co odsyłamy
+
+
+## INTERFEJS: ##
+
+# Umożliwić wyświetlanie po statusach przesyłek oraz filtrowania po formie wysyłki (samodzielne, zamówiony kurier itp.)
+# W przypadku odsyłania paczki w polu pobrania i ubezpieczenia zrobić aktywacje i dezaktywacje tych pól, oraz sklonować pole wartości pobrania do pola wartości ubezpieczenia
+# Wyszczególnić kierunek wysyłki w archiwum (do nas, od nas)
+# Dodać daty realizacji danego zdarzenia (np. wpłynięcia zlecenia do systemu, zamówienia kuriera itp.)
+# W archiwum, w szczegółach zlecenia też wyświetlać status i godiny doręczenia, wtedy lepiej się orietnuje w całości zlecenia
+# W widoku szczegółowego trackingu dodać wyświetlanie danych klienta oraz modelu laptopa i opisu problemu
+# Zmienić widok tabeli w archiwum tak aby dane były wyświetlane czytelniej niż teraz (zmniejszyć pole nazwisko itp.)
+# Wyświetlać pod numerem przesyłki takżę numer zlecenia (ten z WWWW w tekście) i zrobić go klilanym aby przekierowywał do strony DHL od razu ze wstawionym numerem
+
+
+##TECHNICZNE: ##
+
+# W przypadku wyjątku API (niemożliwa godzina itp.) cofnąć status w bazie i ewentualnie anulować zlecenie jeśli zostało wygenerowane
+# W przyadku zabookowania kuriera gdy jest przekierowanie na stronę z listą statusów, odczekać chwilę aby API wygenreowało statury, inaczej będą warningi o indeksach
+# Zrobić porządek w includach, bo teraz np. PHPMailer jest załączany z folderu helpers zamaiast z includes
+# NIE ANULUJE SIĘ kurier gdy zlecenie zwrotne ma zabooowany termin i godzinę dobioru, prawdopodobnie dlatego, że najpierw trzeba anulwoać zlecenie a dopiero potem je usunąć,
+  ale api DHL też nie wywaliło żadnego błędu
+
+
+## BLEDY UZYTKOWE: ##
+
+# Przy klikaniu "Realizuj" gdy kliknie się więcej niż jeden raz, funkcja wykonuje się więcej niż 1 raz: ZAPOBIEC TEMU
+
+
+## OBSERWACJE : ##
+
+# DHL ma czasami dostępne tylko wąskie przedziały godzinowe, przez co nie da się czasami wybrać zakresi 10-13, trzeba wtedy próbować z węższym - 14-15 itp.
+# Czasami zlecenia się dublują, np. zdublowalo się bez wyraźnego powodu zlecenia na nazwisko zając.
+
+
+## OPTYMALIZACJA: ##
+
+# Zoptymalizować niepotrzebne podwójne zapytanie do API w celu sprawdzenia statusu przy archiwizacji -> w completedModel, metoda Index
+
+
+## BLEDY PROJEKTOWE: ##
+
+# WAŻNE! Nazwy plików - pliki odpowiedzi i pliki listów przewozowych - zamienić wstawianie na daty na numer przesyłki
+# WAŻNE! W przypadku bookowania kuriera od klienta do nas, pobrać także numer zlecenia i połączyć jakoś z numerem przesyłki
+# Zunifikować helpery do sprawdzania statusu przesyłek bo teraz jest bałagan

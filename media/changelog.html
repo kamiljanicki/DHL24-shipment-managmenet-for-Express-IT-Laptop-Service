@@ -1,0 +1,31 @@
+<h1>G³ówne zmiany w wersji 0.3 alpha</h1>
+<h3>03.07.2020:</h3>
+
+<ol>
+    <li>Zmiana konwencji nazewnictwa plików XML z protoko³u SOAP: request i response, oraz zmiana konwencji nazewnictwa listów przewozowych.
+        Od teraz listy maj¹ nazwê "Imie_Nazwisko_numerprzsylki". Poprzednio w nazwie byla data stworzenia, co niekiedy kolidowa³o z niektórymi funkcjami, np. anulowania kuriera</li><br>
+
+    <li>Zmiana sposobu komunikacji z baz¹ danych we wszystkich plikach modeli. Ze standardowego PDO::query() zastosowano PDO Prepared statemets wraz z bindValue() oraz zastosowano okreœlanie typu danych PDO::PARAM (int, str itp.)
+        co pozwoli unikn¹æ b³êdów gdy w treœci zlecenia bêd¹ znaki specjalne np cudzys³owy albo apostrowy, dodatkowo podnosi to bezpieczeñstwo aplikacji zabezpieczaj¹c j¹ przed SQL Injection.</li><br>
+
+    <li>Inne drobniejsze poprawki (usprawnienie niektórych funkcji, poprawienie logiki warunkowej w niektórych plikach)</li>
+</ol>
+
+<h2><i>PODSUMOWANIE: S¹ to zmiany g³ównie technicznie, niewidoczne w codziennym u¿ytkowaniu, ale istotne dla spójnoœci i bezpieczeñstwa aplikacji.</i></h2>
+
+<br/>
+
+<h1>Zmiany planowane w wersji 0.4 alpha:</h1>
+
+<ol>
+    <li><b>ZROBIONE:</b> Wysy³anie danych do przelewu (do gotowego szablonu wystarczy dodaæ tylko kwotê, za co i ewentualne notatki)</li><br/>
+    <li><b>ZROBIONE:</b> Wyœwietlanie wiêkszej iloœæi danych w zleceniu: forma p³atnoœci, dane do faktury itp.</li><br/>
+    <li><b>ZROBIONE:</b> Dodanie historii statusów danego zlecenia tak aby by³o klarownie widaæ jaki by³ jego przebieg (Wys³ano kuriera(data) -> odebrano(data) -> odes³ano(data) (+notatki jeœli bêd¹) itd...)</li><br/>
+    <li><b>ZROBIONE:</b> Usprawnienie wyszukiwarki poprzez umo¿liwienie wyszukiwanie po nazwie firmy</li><br/>
+    <li><b>ZROBIONE:</b> Wysy³anie do klienta maila w momencie odsy³ania paczki, z informacj¹, ¿e paczka jedzie, kwot¹ pobrania (jeœli jest) oraz linkiem do œledzenia.</li><br/>
+    <li><b>ZROBIONE:</b> Umo¿liwienie dodawania notatek dla kuriera do listu przewozowego  przy zamawianiu przesy³ki zwrotnej (np. obok koœcio³a, proszê zostawiæ u s¹siada, proszê dzwoniæ itp.)</li><br/>
+    <li>Wysy³anie SMS do klienta w momencie dotarcia paczki do nas oraz w momencie odsy³ania do niego z informacj¹ o pobraniu (jeœli jest) i linkiem do œledzenia</li><br/>
+    <li>Ulepszenia i usprawnienia interfejsu</li><br/>
+</ol>
+
+<hr/>
